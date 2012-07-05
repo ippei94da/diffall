@@ -1,0 +1,13 @@
+#! /usr/bin/env ruby
+# coding: utf-8
+
+require "optparse"
+
+## option analysis
+OPTIONS = {}
+op = OptionParser.new
+op.on("-s"    , "--size"    , "Check size."){OPTIONS[:size] = true}
+op.on("-c"    , "--checksum", "Check size and checksum."){OPTIONS[:size] = true}
+op.on("-d"    , "--diff"    , "Check size, checksum and diff command."){OPTIONS[:size] = true}
+op.parse!(ARGV)
+
