@@ -1,0 +1,2 @@
+bin/diffall uses external hash commands (md5sum/sha256sum) and not uses Digest library in Ruby 1.9.1.
+Because the Digest library consumes many memory spaces without released.

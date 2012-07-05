@@ -1,13 +1,56 @@
 #! /usr/bin/env ruby
 # coding: utf-8
 
+#HASH_COMMAND = 'sha256sum'
+HASH_COMMAND = 'md5sum'
+
+require "pp"
 require "optparse"
+#require "digest/sha1"
+#require "digest/sha2"
+require "rubygems"
+gem "builtinextension"
+require "string_escape_zsh.rb"
+#/home/ippei/devel/builtinextension/lib/
+
+def show_groups(hash)
+  hash.each do |key, files|
+    puts key
+    files.each do |file|
+      puts "  " + file
+    end
+    puts
+  end
+end
 
 ## option analysis
 OPTIONS = {}
 op = OptionParser.new
 op.on("-s"    , "--size"    , "Check size."){OPTIONS[:size] = true}
-op.on("-c"    , "--checksum", "Check size and checksum."){OPTIONS[:size] = true}
-op.on("-d"    , "--diff"    , "Check size, checksum and diff command."){OPTIONS[:size] = true}
+op.on("-h"    , "--hash", "Check size and hash(default)."){OPTIONS[:hash] = true}
+#op.on("-d"    , "--diff"    , "Check size, checksum and diff command."){OPTIONS[:size] = true}
 op.parse!(ARGV)
 
+size_groups = {}
+ARGV.each do |file|
+  size_groups[File.size(file)] ||= []
+  size_groups[File.size(file)] << file
+end
+if OPTIONS[:size]
+  show_groups(size_groups)
+  exit
+end
+
+hash_groups = {}
+size_groups.each do |size, files|
+  next if files.size < 2
+  files.each do |file|
+    #puts file
+    command = "#{HASH_COMMAND} #{file.escape_zsh}"
+    hash = `#{command}`.sub("  #{file}", '')
+    #hash = Digest::SHA256.hexdigest(File.open(file, "rb").read)
+    hash_groups[hash] ||= []
+    hash_groups[hash] << file
+  end
+end
+show_groups(hash_groups)

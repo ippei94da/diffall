@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/ippei94da/diffall"
   gem.license = "MIT"
   gem.summary = %Q{This gem provides a command to check identical files among many files.}
-  gem.description = %Q{Checking process is composed of three steps: file size, checksum hash, and diff command. User can stop the first, second step by indicationg an option.}
+  gem.description = %Q{Checking process is composed of two steps; file size and checksum hash. Not using diff command. User can stop the first step by indicationg an option.}
   gem.email = "ippei94da@gmail.com"
   gem.authors = ["ippei94da"]
   # dependencies defined in Gemfile
