@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "diffall"
-  s.version = "0.0.0"
+  s.version = "0.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["ippei94da"]
-  s.date = "2012-07-05"
+  s.date = "2012-08-30"
   s.description = "Checking process is composed of two steps; file size and checksum hash. Not using diff command. User can stop the first step by indicationg an option."
   s.email = "ippei94da@gmail.com"
   s.executables = ["diffall"]
@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     ".rspec",
+    "CHANGES",
     "Gemfile",
     "LICENSE.txt",
     "README",
@@ -28,15 +29,18 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "bin/diffall",
+    "diffall.gemspec",
     "lib/diffall.rb",
     "spec/diffall_spec.rb",
     "spec/files/12_a",
     "spec/files/1_a",
     "spec/files/1_b",
+    "spec/files/23_a",
     "spec/files/2_a",
     "spec/files/2_b",
     "spec/files/empty_a",
     "spec/files/empty_b",
+    "spec/files/empty_c",
     "spec/spec_helper.rb"
   ]
   s.homepage = "http://github.com/ippei94da/diffall"
