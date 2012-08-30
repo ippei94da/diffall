@@ -15,8 +15,9 @@ require "string_escape_zsh.rb"
 
 def show_groups(hash)
   hash.each do |key, files|
+    next if files.size < 2
     puts key
-    files.each do |file|
+    files.sort.each do |file|
       puts "  " + file
     end
     puts
@@ -43,7 +44,7 @@ end
 
 hash_groups = {}
 size_groups.each do |size, files|
-  next if files.size < 2
+  #next if files.size < 2
   files.each do |file|
     #puts file
     command = "#{HASH_COMMAND} #{file.escape_zsh}"

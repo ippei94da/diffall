@@ -1,0 +1,9 @@
+= diffall Changelog
+
+== Master (for 0.0.1)
+* Modify bin/diffall to show only multiplicated files.
+
+== Version 0.0.0
+
+* Initial release
+
