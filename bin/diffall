@@ -16,11 +16,15 @@ require "string_escape_zsh.rb"
 def show_groups(hash)
   hash.each do |key, files|
     next if files.size < 2
-    puts key
-    files.sort.each do |file|
-      puts "  " + file
+    unless OPTIONS[:filename]
+      puts
+      puts key
     end
-    puts
+    num = files.size
+    num = num - 1 if OPTIONS[:last_hide]
+    num.times do |i|
+      puts "  " + files[i]
+    end
   end
 end
 
@@ -29,6 +33,9 @@ OPTIONS = {}
 op = OptionParser.new
 op.on("-s"    , "--size"    , "Check size."){OPTIONS[:size] = true}
 op.on("-h"    , "--hash", "Check size and hash(default)."){OPTIONS[:hash] = true}
+op.on("-f"    , "--filename-only", "Show filename only, no hash value."){OPTIONS[:filename] = true}
+op.on("-l"    , "--last-hide", "Not show last filename among the same hash value."){OPTIONS[:last_hide] = true}
+
 #op.on("-d"    , "--diff"    , "Check size, checksum and diff command."){OPTIONS[:size] = true}
 op.parse!(ARGV)
 

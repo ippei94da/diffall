@@ -2,6 +2,8 @@
 
 == Master (for 0.0.1)
 * Modify bin/diffall to show only multiplicated files.
+* Add --filename-only option to bin/diffall.
+* Add --last-hide option to bin/diffall.
 
 == Version 0.0.0
 
