@@ -1,8 +1,8 @@
 #! /usr/bin/env ruby
 # coding: utf-8
 
-#HASH_COMMAND = 'sha256sum'
-HASH_COMMAND = 'md5sum'
+HASH_COMMAND = 'sha256sum'
+#HASH_COMMAND = 'md5sum'
 
 require "pp"
 require "optparse"
@@ -35,12 +35,28 @@ op.on("-s"    , "--size"    , "Check size."){OPTIONS[:size] = true}
 op.on("-h"    , "--hash", "Check size and hash(default)."){OPTIONS[:hash] = true}
 op.on("-f"    , "--filename-only", "Show filename only, no hash value."){OPTIONS[:filename] = true}
 op.on("-l"    , "--last-hide", "Not show last filename among the same hash value."){OPTIONS[:last_hide] = true}
+op.on("-r"    , "--recursive", "Recursive indication for directory."){OPTIONS[:recursive] = true}
 
 #op.on("-d"    , "--diff"    , "Check size, checksum and diff command."){OPTIONS[:size] = true}
 op.parse!(ARGV)
 
+if OPTIONS[:recursive]
+  files = []
+  ARGV.each do |file|
+    if File.directory? file
+      files << Dir.glob("#{file}/**/*")
+    else
+      files << file
+    end
+  end
+else
+  files = ARGV
+end
+files.flatten!
+files.delete_if {|file| File.directory? file }
+
 size_groups = {}
-ARGV.each do |file|
+files.each do |file|
   size_groups[File.size(file)] ||= []
   size_groups[File.size(file)] << file
 end

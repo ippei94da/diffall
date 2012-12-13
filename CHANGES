@@ -1,6 +1,7 @@
 = diffall Changelog
 
 == Master (for 0.0.2)
+* Add --reccurve option to bin/diffall.
 
 == Version 0.0.1
 * Modify bin/diffall to show only multiplicated files.
