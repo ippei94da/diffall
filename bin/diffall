@@ -23,7 +23,9 @@ def show_groups(hash)
     num = files.size
     num = num - 1 if OPTIONS[:last_hide]
     num.times do |i|
-      puts "  " + files[i]
+      indent = "  "
+      indent = "" if OPTIONS[:filename]
+      puts indent + files[i]
     end
   end
 end
@@ -33,7 +35,7 @@ OPTIONS = {}
 op = OptionParser.new
 op.on("-s"    , "--size"    , "Check size."){OPTIONS[:size] = true}
 op.on("-h"    , "--hash", "Check size and hash(default)."){OPTIONS[:hash] = true}
-op.on("-f"    , "--filename-only", "Show filename only, no hash value."){OPTIONS[:filename] = true}
+op.on("-f"    , "--filename-only", "Show filename only, no hash value, no indent."){OPTIONS[:filename] = true}
 op.on("-l"    , "--last-hide", "Not show last filename among the same hash value."){OPTIONS[:last_hide] = true}
 op.on("-r"    , "--recursive", "Recursive indication for directory."){OPTIONS[:recursive] = true}
 

@@ -2,6 +2,7 @@
 
 == Master (for 0.0.2)
 * Add --reccurve option to bin/diffall.
+* Modify --filename-only not to contain indent at the beginning of line.
 
 == Version 0.0.1
 * Modify bin/diffall to show only multiplicated files.
