@@ -38,8 +38,6 @@ op.on("-h"    , "--hash", "Check size and hash(default)."){OPTIONS[:hash] = true
 op.on("-f"    , "--filename-only", "Show filename only, no hash value, no indent."){OPTIONS[:filename] = true}
 op.on("-l"    , "--last-hide", "Not show last filename among the same hash value."){OPTIONS[:last_hide] = true}
 op.on("-r"    , "--recursive", "Recursive indication for directory."){OPTIONS[:recursive] = true}
-
-#op.on("-d"    , "--diff"    , "Check size, checksum and diff command."){OPTIONS[:size] = true}
 op.parse!(ARGV)
 
 if OPTIONS[:recursive]
