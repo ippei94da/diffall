@@ -2,7 +2,6 @@
 # coding: utf-8
 
 HASH_COMMAND = 'sha256sum'
-#HASH_COMMAND = 'md5sum'
 
 require "pp"
 require "optparse"

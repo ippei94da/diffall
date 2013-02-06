@@ -3,6 +3,7 @@
 == Master (for 0.0.2)
 * Add --recurve option to bin/diffall.
 * Modify --filename-only not to contain indent at the beginning of line.
+* Obsolete file size checking function.
 
 == Version 0.0.1
 * Modify bin/diffall to show only multiplicated files.
