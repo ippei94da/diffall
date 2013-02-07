@@ -1,79 +1,40 @@
 #! /usr/bin/env ruby
 # coding: utf-8
 
-HASH_COMMAND = 'sha256sum'
-
 require "pp"
 require "optparse"
-#require "digest/sha1"
-#require "digest/sha2"
 require "rubygems"
 gem "builtinextension"
 require "string_escape_zsh.rb"
-#/home/ippei/devel/builtinextension/lib/
-
-def show_groups(hash)
-  hash.each do |key, files|
-    next if files.size < 2
-    unless OPTIONS[:filename]
-      puts
-      puts key
-    end
-    num = files.size
-    num = num - 1 if OPTIONS[:last_hide]
-    num.times do |i|
-      indent = "  "
-      indent = "" if OPTIONS[:filename]
-      puts indent + files[i]
-    end
-  end
-end
 
 ## option analysis
 OPTIONS = {}
 op = OptionParser.new
-op.on("-s"    , "--size"    , "Check size."){OPTIONS[:size] = true}
-op.on("-h"    , "--hash", "Check size and hash(default)."){OPTIONS[:hash] = true}
 op.on("-f"    , "--filename-only", "Show filename only, no hash value, no indent."){OPTIONS[:filename] = true}
 op.on("-l"    , "--last-hide", "Not show last filename among the same hash value."){OPTIONS[:last_hide] = true}
 op.on("-r"    , "--recursive", "Recursive indication for directory."){OPTIONS[:recursive] = true}
 op.parse!(ARGV)
 
-if OPTIONS[:recursive]
-  files = []
-  ARGV.each do |file|
-    if File.directory? file
-      files << Dir.glob("#{file}/**/*")
-    else
-      files << file
-    end
-  end
+if ARGV.size == 0
+  #stdin mode
+  da = DiffAll.read_io($stdin)
 else
-  files = ARGV
-end
-files.flatten!
-files.delete_if {|file| File.directory? file }
-
-size_groups = {}
-files.each do |file|
-  size_groups[File.size(file)] ||= []
-  size_groups[File.size(file)] << file
-end
-if OPTIONS[:size]
-  show_groups(size_groups)
-  exit
-end
-
-hash_groups = {}
-size_groups.each do |size, files|
-  #next if files.size < 2
-  files.each do |file|
-    #puts file
-    command = "#{HASH_COMMAND} #{file.escape_zsh}"
-    hash = `#{command}`.sub("  #{file}", '')
-    #hash = Digest::SHA256.hexdigest(File.open(file, "rb").read)
-    hash_groups[hash] ||= []
-    hash_groups[hash] << file
+  if OPTIONS[:recursive]
+    files = []
+    ARGV.each do |file|
+      if File.directory? file
+        files << Dir.glob("#{file}/**/*")
+      else
+        files << file
+      end
+    end
+  else
+    files = ARGV
   end
+  files.flatten!
+  files.delete_if {|file| File.directory? file }
+
+  da = DiffAll.new(files)
 end
-show_groups(hash_groups)
+
+da.show(OPTIONS)

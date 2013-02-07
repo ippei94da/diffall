@@ -4,6 +4,7 @@
 * Add --recurve option to bin/diffall.
 * Modify --filename-only not to contain indent at the beginning of line.
 * Obsolete file size checking function.
+* Add DiffAll class as backend.
 
 == Version 0.0.1
 * Modify bin/diffall to show only multiplicated files.
