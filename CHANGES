@@ -1,6 +1,8 @@
 = diffall Changelog
 
-== Master (for 0.0.2)
+== Master (for 0.0.3)
+
+== Version 0.0.2
 * Add --recurve option to bin/diffall.
 * Modify --filename-only not to contain indent at the beginning of line.
 * Obsolete file size checking function.

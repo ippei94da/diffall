@@ -1,6 +1,10 @@
 #! /usr/bin/env ruby
 # coding: utf-8
 
+require "rubygems"
+gem "builtinextension"
+require "string_escape_zsh.rb"
+
 #
 #
 #
@@ -10,7 +14,7 @@ class DiffAll
   attr_reader :hashtags
 
   #
-  def initialize(files)
+  def initialize(files = [])
     @hashtags = {}
     files.each do |file|
       command = "#{HASH_COMMAND} #{file.escape_zsh}"
@@ -23,7 +27,7 @@ class DiffAll
 
   #
   def self.read_io(io)
-    result = self.class.new
+    result = self.new
     #io.readlines.each do |line|
     io.each_line do |line|
       result.add line
@@ -35,27 +39,36 @@ class DiffAll
   #E.g.,
   # "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865  file1"
 
-  def add(line)
+  def show(options, io = $stdout)
+    #pp @hashtags
+    hashtag_files = {}
+    @hashtags.each do |file, hashtag|
+      hashtag_files[hashtag] ||= []
+      hashtag_files[hashtag] << file
+    end
+
+    hashtag_files.keys.sort.each do |hashtag|
+      files = hashtag_files[hashtag]
+      next if files.size < 2
+      unless options[:filename]
+        io.puts hashtag
+      end
+      num = files.size
+      num = num - 1 if options[:last_hide]
+      num.times do |i|
+        indent = "  "
+        indent = "" if options[:filename]
+        io.puts indent + files[i]
+      end
+    end
+  end
+
+  #private
+  def add(str)
+    str.chomp!
     hashtag  = str[0..63]
     filename = str[66..-1]
     @hashtags[filename] = hashtag
-  end
-
-  def show(options, io = $stdout)
-    @hashtags.each do |key, files|
-      next if files.size < 2
-      unless OPTIONS[:filename]
-        puts
-        puts key
-      end
-      num = files.size
-      num = num - 1 if OPTIONS[:last_hide]
-      num.times do |i|
-        indent = "  "
-        indent = "" if OPTIONS[:filename]
-        puts indent + files[i]
-      end
-    end
   end
 
 end

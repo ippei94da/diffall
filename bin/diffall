@@ -4,8 +4,9 @@
 require "pp"
 require "optparse"
 require "rubygems"
-gem "builtinextension"
+#gem "builtinextension"
 require "string_escape_zsh.rb"
+require "diffall"
 
 ## option analysis
 OPTIONS = {}
