@@ -3,7 +3,7 @@
 
 require "rubygems"
 gem "builtinextension"
-require "string_escape_zsh.rb"
+require "string/escapezsh.rb"
 
 #
 #

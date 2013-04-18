@@ -1,6 +1,7 @@
 = diffall Changelog
 
 == Master (for 0.0.4)
+* Adjust to builtinextension-0.1.0.
 
 == Version 0.0.3
 * Obsolete file size checking function.
